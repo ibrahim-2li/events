@@ -6,8 +6,12 @@ use App\Models\Attendance;
 use Filament\Widgets\StatsOverviewWidget;
 use Filament\Widgets\StatsOverviewWidget\Stat;
 
+
+
 class AttendanceStatsWidget extends StatsOverviewWidget
 {
+    protected static bool $isDiscovered = false;
+
     protected function getStats(): array
     {
         $userEmail = auth()->user()->email;
