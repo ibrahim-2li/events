@@ -1,12 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ $event->title }} - Event Details</title>
+    <title>{{ $event->title }} - تفاصيل الحدث</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Arabic:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Noto Sans Arabic', sans-serif;
+        }
+
+        .rtl {
+            direction: rtl;
+        }
+
+        .ltr {
+            direction: ltr;
+        }
+    </style>
     <script>
         tailwind.config = {
             theme: {
@@ -28,14 +43,14 @@
             <div class="flex justify-between items-center py-4">
                 <a href="{{ route('events.index') }}"
                     class="flex items-center text-white hover:text-purple-300 transition-colors duration-300">
-                    <i class="fas fa-arrow-left mr-2"></i>
-                    <span>Back to Events</span>
+                    <i class="fas fa-arrow-right ml-2"></i>
+                    <span>العودة إلى الأحداث</span>
                 </a>
                 <div class="flex items-center space-x-4">
                     <span
                         class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium {{ $event->is_active ? 'bg-green-500/20 text-green-300 border border-green-500/30' : 'bg-red-500/20 text-red-300 border border-red-500/30' }}">
-                        <i class="fas fa-circle mr-1 text-xs"></i>
-                        {{ $event->is_active ? 'Active' : 'Inactive' }}
+                        <i class="fas fa-circle ml-1 text-xs"></i>
+                        {{ $event->is_active ? 'نشط' : 'غير نشط' }}
                     </span>
                 </div>
             </div>
@@ -106,7 +121,7 @@
                 <div class="lg:col-span-2 space-y-8">
                     <!-- Event Details Card -->
                     <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
-                        <h2 class="text-2xl font-bold text-white mb-6">Event Details</h2>
+                        <h2 class="text-2xl font-bold text-white mb-6">تفاصيل الحدث</h2>
 
                         <div class="space-y-6">
                             <!-- Date & Time -->
@@ -116,7 +131,7 @@
                                         <i class="fas fa-calendar text-blue-400 text-xl"></i>
                                     </div>
                                     <div>
-                                        <h3 class="font-semibold text-white mb-1">Start Date</h3>
+                                        <h3 class="font-semibold text-white mb-1">تاريخ البداية</h3>
                                         <p class="text-gray-300 text-lg">{{ $event->start_date->format('l, F j, Y') }}
                                         </p>
                                         <p class="text-gray-400">{{ $event->start_date->format('g:i A') }}</p>
@@ -128,7 +143,7 @@
                                         <i class="fas fa-clock text-purple-400 text-xl"></i>
                                     </div>
                                     <div>
-                                        <h3 class="font-semibold text-white mb-1">End Date</h3>
+                                        <h3 class="font-semibold text-white mb-1">تاريخ النهاية</h3>
                                         <p class="text-gray-300 text-lg">{{ $event->end_date->format('l, F j, Y') }}
                                         </p>
                                         <p class="text-gray-400">{{ $event->end_date->format('g:i A') }}</p>
@@ -143,7 +158,7 @@
                                         <i class="fas fa-map-marker-alt text-red-400 text-xl"></i>
                                     </div>
                                     <div>
-                                        <h3 class="font-semibold text-white mb-1">Location</h3>
+                                        <h3 class="font-semibold text-white mb-1">الموقع</h3>
                                         <p class="text-gray-300 text-lg">{{ $event->location }}</p>
                                         <button
                                             class="mt-2 text-blue-400 hover:text-blue-300 transition-colors duration-300">
@@ -160,7 +175,7 @@
                                     <i class="fas fa-hourglass-half text-green-400 text-xl"></i>
                                 </div>
                                 <div>
-                                    <h3 class="font-semibold text-white mb-1">Duration</h3>
+                                    <h3 class="font-semibold text-white mb-1">المدة</h3>
                                     <p class="text-gray-300 text-lg">
                                         {{ $event->start_date->diffForHumans($event->end_date, true) }}
                                     </p>
@@ -171,13 +186,13 @@
 
                     <!-- About Section -->
                     <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-8 border border-white/20">
-                        <h2 class="text-2xl font-bold text-white mb-6">About This Event</h2>
+                        <h2 class="text-2xl font-bold text-white mb-6">حول هذا الحدث</h2>
                         <div class="prose prose-invert max-w-none">
                             <p class="text-gray-300 leading-relaxed mb-4">
-                                {{ $event->description ?: 'This is an exciting event that brings together professionals, enthusiasts, and curious minds from various backgrounds. Whether you\'re looking to network, learn new skills, or simply have a great time, this event has something for everyone.' }}
+                                {{ $event->description ?: 'هذا حدث مثير يجمع المهنيين والمتحمسين والعقول الفضولية من خلفيات مختلفة. سواء كنت تبحث عن التواصل أو تعلم مهارات جديدة أو ببساطة قضاء وقت رائع، هذا الحدث يحتوي على شيء للجميع.' }}
                             </p>
                             <p class="text-gray-300 leading-relaxed">
-                                An invitation to join a valuable event for networking and personal growth.
+                                دعوة للانضمام إلى حدث قيم للتواصل والنمو الشخصي.
                             </p>
                         </div>
                     </div>
@@ -187,45 +202,81 @@
                 <div class="space-y-6">
                     <!-- Register Card -->
                     <div class="bg-gradient-to-br from-purple-600 to-pink-600 rounded-2xl p-8 text-center">
-                        <h3 class="text-2xl font-bold text-white mb-4">Ready to Join?</h3>
+                        <h3 class="text-2xl font-bold text-white mb-4">مستعد للانضمام؟</h3>
                         <p class="text-purple-100 mb-6">
-                            Register now to secure your spot at this amazing event!
+                            سجل الآن لتأمين مكانك في هذا الحدث المذهل!
                         </p>
-                        <button
-                            class="w-full bg-white text-purple-600 font-bold py-4 px-6 rounded-xl hover:bg-gray-100 transition-colors duration-300 transform hover:scale-105 shadow-lg">
-                            <i class="fas fa-ticket-alt mr-2"></i>
-                            Register Now
-                        </button>
+
+                        @if (session('success'))
+                            <div
+                                class="bg-green-500/20 border border-green-500/30 text-green-200 px-4 py-3 rounded-lg mb-4">
+                                <i class="fas fa-check-circle ml-2"></i>
+                                {{ session('success') }}
+                            </div>
+                        @endif
+
+                        @if ($errors->any())
+                            <div class="bg-red-500/20 border border-red-500/30 text-red-200 px-4 py-3 rounded-lg mb-4">
+                                <ul class="list-disc list-inside space-y-1">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
+
+                        <form action="{{ route('events.register', $event) }}" method="POST" class="space-y-4">
+                            @csrf
+                            <div>
+                                <input type="text" name="name" value="{{ old('name') }}"
+                                    placeholder="الاسم الكامل"
+                                    class="w-full px-4 py-3 rounded-xl border-0 bg-white/20 backdrop-blur-sm text-white placeholder-purple-200 focus:bg-white/30 focus:ring-2 focus:ring-white/50 transition-all duration-300"
+                                    required>
+                            </div>
+                            <div>
+                                <input type="email" name="email" value="{{ old('email') }}"
+                                    placeholder="البريد الإلكتروني"
+                                    class="w-full px-4 py-3 rounded-xl border-0 bg-white/20 backdrop-blur-sm text-white placeholder-purple-200 focus:bg-white/30 focus:ring-2 focus:ring-white/50 transition-all duration-300"
+                                    required>
+                            </div>
+                            <button type="submit"
+                                class="w-full bg-white text-purple-600 font-bold py-4 px-6 rounded-xl hover:bg-gray-100 transition-colors duration-300 transform hover:scale-105 shadow-lg">
+                                <i class="fas fa-ticket-alt ml-2"></i>
+                                سجل الآن
+                            </button>
+                        </form>
+
                         <p class="text-purple-200 text-sm mt-4">
-                            Free registration • QR code provided
+                            تسجيل مجاني • رمز QR متوفر
                         </p>
                     </div>
 
                     <!-- Event Info -->
-                    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-                        <h3 class="text-lg font-semibold text-white mb-4">Event Information</h3>
+                    {{-- <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
+                        <h3 class="text-lg font-semibold text-white mb-4">معلومات الحدث</h3>
                         <div class="space-y-3">
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-400">Event ID</span>
+                                <span class="text-gray-400">معرف الحدث</span>
                                 <span class="text-white font-mono text-sm">{{ $event->id }}</span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-400">Status</span>
+                                <span class="text-gray-400">الحالة</span>
                                 <span
                                     class="inline-flex items-center px-2 py-1 rounded-full text-xs font-medium {{ $event->is_active ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300' }}">
                                     {{ $event->is_active ? 'Active' : 'Inactive' }}
                                 </span>
                             </div>
                             <div class="flex justify-between items-center">
-                                <span class="text-gray-400">Created</span>
+                                <span class="text-gray-400">تاريخ الإنشاء</span>
                                 <span class="text-white text-sm">{{ $event->created_at->format('M j, Y') }}</span>
                             </div>
                         </div>
-                    </div>
+                    </div> --}}
 
                     <!-- Share -->
-                    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20">
-                        <h3 class="text-lg font-semibold text-white mb-4">Share Event</h3>
+
+                    <div class="bg-white/10 backdrop-blur-lg rounded-2xl p-6 border border-white/20 mt-4">
+                        <h3 class="text-lg font-semibold text-white mb-4">شارك الحدث</h3>
                         <div class="flex space-x-3">
                             <button
                                 class="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-3 rounded-lg transition-colors duration-300">
@@ -254,7 +305,7 @@
     <footer class="bg-black/20 backdrop-blur-lg border-t border-white/10 mt-20">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
             <div class="text-center">
-                <p class="text-gray-400">© 2024 Events Platform. All rights reserved.</p>
+                <p class="text-gray-400">© 2024 منصة الأحداث. جميع الحقوق محفوظة.</p>
             </div>
         </div>
     </footer>

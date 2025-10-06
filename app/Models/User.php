@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Event;
+use Filament\Tables\Columns\Layout\Panel;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -14,6 +15,16 @@ class User extends Authenticatable
     /** @use HasFactory<\Database\Factories\UserFactory> */
     use HasFactory, Notifiable;
 
+    const ROLE_USER = 'USER';
+    const ROLE_ADMIN = 'ADMIN';
+    const ROLE_SCANNER = 'SCANNER';
+
+    const ROLES = [
+        self::ROLE_USER => 'User',
+        self::ROLE_ADMIN => 'Admin',
+        self::ROLE_SCANNER => 'Scanner',
+    ];
+
     /**
      * The attributes that are mass assignable.
      *
@@ -23,6 +34,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -48,6 +60,26 @@ class User extends Authenticatable
         ];
     }
 
+    public function canAccess(Panel $panel): bool
+    {
+        return $this->isAdmin() || $this->isUser() || $this->isScanner();
+    }
+
+    public function isAdmin(): bool
+    {
+        return $this->role === self::ROLE_ADMIN;
+    }
+
+    public function isUser(): bool
+    {
+        return $this->role === self::ROLE_USER;
+    }
+
+    public function isScanner(): bool
+    {
+        return $this->role === self::ROLE_SCANNER;
+    }
+
     public function events(): HasMany
     {
         return $this->hasMany(Event::class);
@@ -57,4 +89,6 @@ class User extends Authenticatable
     {
         return $this->hasMany(Attendance::class);
     }
+
+
 }

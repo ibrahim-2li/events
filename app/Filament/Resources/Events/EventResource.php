@@ -2,18 +2,19 @@
 
 namespace App\Filament\Resources\Events;
 
-use App\Filament\Resources\Events\Pages\CreateEvent;
+use BackedEnum;
+use App\Models\Event;
+use Filament\Tables\Table;
+use Filament\Schemas\Schema;
+use Filament\Resources\Resource;
+use Filament\Support\Icons\Heroicon;
+use Illuminate\Support\Facades\Auth;
 use App\Filament\Resources\Events\Pages\EditEvent;
-use App\Filament\Resources\Events\Pages\ListEvents;
 use App\Filament\Resources\Events\Pages\ViewEvent;
+use App\Filament\Resources\Events\Pages\ListEvents;
+use App\Filament\Resources\Events\Pages\CreateEvent;
 use App\Filament\Resources\Events\Schemas\EventForm;
 use App\Filament\Resources\Events\Tables\EventsTable;
-use App\Models\Event;
-use BackedEnum;
-use Filament\Resources\Resource;
-use Filament\Schemas\Schema;
-use Filament\Support\Icons\Heroicon;
-use Filament\Tables\Table;
 
 class EventResource extends Resource
 {
@@ -22,6 +23,13 @@ class EventResource extends Resource
     protected static string|BackedEnum|null $navigationIcon = Heroicon::Calendar;
 
     protected static ?string $recordTitleAttribute = 'Events';
+
+    protected static ?int $navigationSort = 1;
+
+    public static function canAccess(): bool
+    {
+        return Auth::check() && Auth::user()->isAdmin();
+    }
 
     public static function form(Schema $schema): Schema
     {
