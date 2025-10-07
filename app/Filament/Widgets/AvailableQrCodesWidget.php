@@ -20,34 +20,34 @@ class AvailableQrCodesWidget extends BaseWidget
             ->query(
                 Attendance::query()
                     ->where('attendee_email', auth()->user()->email)
-                    ->whereNull('used_at') // Only show unused QR codes
+                    ->whereNull('used_at')
                     ->with('event')
                     ->orderBy('created_at', 'desc')
             )
             ->columns([
                 Tables\Columns\TextColumn::make('event.title')
-                    ->label('اسم الحدث')
+                    ->label('Event Name')
                     ->searchable()
                     ->sortable()
                     ->weight('bold'),
 
                 Tables\Columns\TextColumn::make('event.start_date')
-                    ->label('تاريخ الحدث')
+                    ->label('Event Date')
                     ->date('Y-m-d')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('event.location')
-                    ->label('مكان الحدث')
-                    ->placeholder('غير محدد')
+                    ->label('Event Location')
+                    ->placeholder('Not specified')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('created_at')
-                    ->label('تاريخ التسجيل')
+                    ->label('Registration Date')
                     ->dateTime('Y-m-d H:i')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('actions')
-                    ->label('الإجراءات')
+                    ->label('Actions')
                     ->getStateUsing(function (Attendance $record): string {
                         $viewUrl = route('view-qr', $record->id);
                         $downloadUrl = route('download-qr', $record->id);
@@ -59,13 +59,13 @@ class AvailableQrCodesWidget extends BaseWidget
                                         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M15 12a3 3 0 11-6 0 3 3 0 016 0z'></path>
                                         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z'></path>
                                     </svg>
-                                    عرض
+                                    View
                                 </a>
                                 <a href='{$downloadUrl}' class='inline-flex items-center px-3 py-1 text-sm font-medium text-green-600 bg-green-100 rounded-md hover:bg-green-200'>
                                     <svg class='w-4 h-4 mr-1' fill='none' stroke='currentColor' viewBox='0 0 24 24'>
                                         <path stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z'></path>
                                     </svg>
-                                    تحميل SVG
+                                    Download SVG
                                 </a>
                             </div>
                         ";
@@ -74,23 +74,22 @@ class AvailableQrCodesWidget extends BaseWidget
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('event_id')
-                    ->label('الحدث')
+                    ->label('Event')
                     ->relationship('event', 'title')
                     ->searchable()
                     ->preload(),
 
                 Tables\Filters\Filter::make('recent')
-                    ->label('الحديثة')
+                    ->label('Recent')
                     ->query(fn ($query) => $query->where('created_at', '>=', now()->subDays(7))),
             ])
             ->actions([
-                // Actions removed due to compatibility issues
-                // Using clickable rows instead
+                // Actions removed due to compatibility issues with Filament v4
             ])
-            ->emptyStateHeading('لا توجد رموز QR متاحة')
-            ->emptyStateDescription('جميع رموز QR الخاصة بك تم استخدامها أو لا توجد رموز متاحة.')
+            ->emptyStateHeading('No QR Codes Available')
+            ->emptyStateDescription('All your QR codes have been used or there are no available QR codes.')
             ->emptyStateIcon('heroicon-o-qr-code')
-            ->heading('رموز QR المتاحة')
-            ->description('رموز QR التي لم يتم استخدامها بعد');
+            ->heading('Available QR Codes')
+            ->description('QR Codes that have not been used yet');
     }
 }

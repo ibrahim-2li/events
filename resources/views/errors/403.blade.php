@@ -97,9 +97,9 @@
             يجب أن تكون مدير أو ماسح QR للوصول إلى ماسح الرموز.
         </p>
         <div class="error-actions">
-            <a href="{{ route('filament.dashboard.auth.login') }}" class="btn btn-primary">
+            {{-- <a href="{{ route('filament.dashboard.auth.login') }}" class="btn btn-primary">
                 تسجيل الدخول
-            </a>
+            </a> --}}
             <a href="{{ route('events.index') }}" class="btn btn-secondary">
                 العودة للرئيسية
             </a>

@@ -25,52 +25,52 @@ class AttendanceRecordsWidget extends BaseWidget
             )
             ->columns([
                 Tables\Columns\TextColumn::make('event.title')
-                    ->label('اسم الحدث')
+                    ->label('Event Name')
                     ->searchable()
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('event.start_date')
-                    ->label('تاريخ الحدث')
+                    ->label('Event Date')
                     ->date('Y-m-d')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('used_at')
-                    ->label('وقت التسجيل')
+                    ->label('Registration Date')
                     ->dateTime('Y-m-d H:i')
-                    ->placeholder('لم يتم التسجيل')
+                    ->placeholder('Not registered')
                     ->sortable(),
 
                 Tables\Columns\TextColumn::make('checked_in_by')
-                    ->label('سجل بواسطة')
-                    ->placeholder('لم يتم التسجيل')
+                    ->label('Checked In By')
+                    ->placeholder('Not registered')
                     ->searchable(),
 
                 Tables\Columns\TextColumn::make('status')
-                    ->label('الحالة')
+                    ->label('Status')
                     ->getStateUsing(function (Attendance $record): string {
-                        return $record->used_at ? 'تم الحضور' : 'في الانتظار';
+                        return $record->used_at ? 'Checked In' : 'Pending';
                     })
                     ->badge()
                     ->color(fn (string $state): string => match ($state) {
-                        'تم الحضور' => 'success',
-                        'في الانتظار' => 'warning',
+                        'Checked In' => 'success',
+                        'Pending' => 'warning',
                         default => 'gray',
                     }),
             ])
             ->filters([
                 Tables\Filters\Filter::make('checked_in')
-                    ->label('تم الحضور')
+                    ->label('Checked In')
                     ->query(fn ($query) => $query->whereNotNull('used_at')),
 
                 Tables\Filters\Filter::make('pending')
-                    ->label('في الانتظار')
+                    ->label('Pending')
                     ->query(fn ($query) => $query->whereNull('used_at')),
             ])
             ->actions([
                 // No actions needed for this widget
             ])
-            ->emptyStateHeading('لا توجد سجلات حضور')
-            ->emptyStateDescription('لم يتم العثور على أي سجلات حضور.')
+            ->emptyStateHeading('No Attendance Records')
+            ->emptyStateDescription('No attendance records found.')
             ->emptyStateIcon('heroicon-o-calendar-days');
     }
 }

@@ -35,23 +35,23 @@ class AttendanceStatsWidget extends StatsOverviewWidget
             ->count();
 
         return [
-            Stat::make('إجمالي الحضور', $totalAttendances)
-                ->description('جميع سجلات الحضور')
+            Stat::make('Total Attendances', $totalAttendances)
+                ->description('All Attendances')
                 ->descriptionIcon('heroicon-m-users')
                 ->color('primary'),
 
-            Stat::make('هذا الشهر', $thisMonthAttendances)
-                ->description('حضور هذا الشهر')
+            Stat::make('This Month', $thisMonthAttendances)
+                    ->description('Attendances this month')
                 ->descriptionIcon('heroicon-m-calendar-days')
                 ->color('success'),
 
-            Stat::make('هذا الأسبوع', $thisWeekAttendances)
-                ->description('حضور هذا الأسبوع')
+            Stat::make('This Week', $thisWeekAttendances)
+                ->description('Attendances this week')
                 ->descriptionIcon('heroicon-m-chart-bar')
                 ->color('warning'),
 
-            Stat::make('اليوم', $todayAttendances)
-                ->description('حضور اليوم')
+            Stat::make('Today', $todayAttendances)
+                ->description('Attendances today')
                 ->descriptionIcon('heroicon-m-clock')
                 ->color('info'),
         ];

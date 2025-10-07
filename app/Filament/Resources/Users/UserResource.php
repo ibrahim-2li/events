@@ -23,7 +23,7 @@ class UserResource extends Resource
 
     protected static ?string $recordTitleAttribute = 'Users';
 
-    protected static ?int $navigationSort = 4;
+    protected static ?int $navigationSort = 11;
 
     public static function canAccess(): bool
     {

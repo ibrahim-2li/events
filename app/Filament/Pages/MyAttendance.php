@@ -16,9 +16,9 @@ class MyAttendance extends Page
 
     protected static string|BackedEnum|null $navigationIcon = Heroicon::CalendarDays;
 
-    protected static ?string $navigationLabel = 'حضورياتي';
+    protected static ?string $navigationLabel = 'My Attendance';
 
-    protected static ?string $title = 'حضورياتي';
+    protected static ?string $title = 'My Attendance';
 
     protected static ?string $slug = 'my-attendance';
 
@@ -26,7 +26,7 @@ class MyAttendance extends Page
 
     public function getTitle(): string|Htmlable
     {
-        return 'حضورياتي';
+        return 'My Attendance';
     }
 
     protected function getHeaderWidgets(): array
